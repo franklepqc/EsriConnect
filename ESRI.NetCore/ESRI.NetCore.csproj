@@ -2,6 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>François Lépine</Authors>
+    <Company>François Lépine</Company>
+    <Product>Client REST pour les services Esri</Product>
+    <Description>Client REST pour les services Esri
+Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes des couches)</Description>
+    <Copyright>Ville de Gatineau</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>ESRI;REST;GeoJSON</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageId>ESRIConnect</PackageId>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
