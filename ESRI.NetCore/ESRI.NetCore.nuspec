@@ -4,14 +4,17 @@
     <id>ESRIConnect</id>
     <version>1.0.2</version>
     <authors>François Lépine</authors>
+    <owners>François Lépine</owners>
     <description>
       Client REST pour les services Esri
       Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes des couches)</description>
     <language>fr-CA</language>
     <copyright>François Lépine</copyright>
-    <repositoryUrl>https://github.com/franklepqc/EsriConnect</repositoryUrl>
+    <repository>
+      <url>https://github.com/franklepqc/EsriConnect</url>
+      <type>GitHub</type>
+    </repository>
     <projectUrl>https://github.com/franklepqc/EsriConnect</projectUrl>
-    <licenseUrl>https://github.com/franklepqc/EsriConnect/license</licenseUrl>
 
     <dependencies>
       <dependency id="ESRIConnect.Interfaces" version="1.0.2" />
