@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PackageId>ESRIConnect</PackageId>
+    <Version>1.0.3</Version>
+    <Authors>François Lépine</Authors>
+    <Company></Company>
+    <Product>ESRIConnect</Product>
+    <Description>Client REST pour les services Esri
+Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes des couches)</Description>
+    <Copyright>François Lépine</Copyright>
+    <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

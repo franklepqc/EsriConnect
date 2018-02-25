@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.3</Version>
+    <PackageId>ESRIConnect.Interfaces</PackageId>
+    <Authors>François Lépine</Authors>
+    <Company></Company>
+    <Product>ESRIConnect.Interfaces</Product>
+    <Description>Interfaces pour le client REST pour les services Esri</Description>
+    <Copyright>François Lépine</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
 </Project>
