@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ESRIConnect.Interfaces</id>
+    <version>1.0.2</version>
+    <authors>François Lépine</authors>
+    <description>
+      Interfaces pour le client REST pour les services Esri
+    </description>
+    <language>fr-CA</language>
+    <copyright>François Lépine</copyright>
+    <repositoryUrl>https://github.com/franklepqc/EsriConnect</repositoryUrl>
+    <projectUrl>https://github.com/franklepqc/EsriConnect</projectUrl>
+    <licenseUrl>https://github.com/franklepqc/EsriConnect/license</licenseUrl>
+  </metadata>
+</package>

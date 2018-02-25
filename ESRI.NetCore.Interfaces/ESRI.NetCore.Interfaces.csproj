@@ -2,19 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>François Lépine</Authors>
-    <Company>François Lépine</Company>
-    <Product>Interfaces pour le client REST pour les services Esri</Product>
-    <Description>Interfaces pour le client portant le même nom (excepté Interfaces).</Description>
-    <Copyright>Ville de Gatineau</Copyright>
-    <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
-    <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>ESRI;REST;GeoJSON</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageId>ESRIConnect.Interfaces</PackageId>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
