@@ -1,10 +1,7 @@
-using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using System;
 using System.Linq;
-using System.Net.Http;
 
 namespace ESRI.NetCore.Interfaces.Tests
 {
@@ -23,19 +20,8 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// Injection de dépendances.
         /// </summary>
         private IServiceProvider _serviceCollection = new ServiceCollection()
-            .AddSingleton<IMapper>((srv) =>
-            {
-                var config = new MapperConfiguration((cfg) =>
-                {
-                    cfg.CreateMap<DistrictT, DistrictU>()
-                        .ForMember(k => k.Id, (srcMapping) => srcMapping.MapFrom(q => q.LECODEXVILLID))
-                        .ForMember(k => k.Nom, (srcMapping) => srcMapping.MapFrom(q => q.LENOM))
-                        .ForMember(k => k.Abbreviation, (srcMapping) => srcMapping.MapFrom(q => q.LEABREV));
-                });
-
-                return new Mapper(config);
-            })
-            .AddScoped<IParametresRequete, ParametresRequete>()
+            .AddTransient<IConstructeurUrl, ConstructeurUrl>()
+            .AddTransient<IParametresRequete, ParametresRequete>()
             .AddScoped<IClient, Client>()
             .BuildServiceProvider();
 
@@ -53,10 +39,38 @@ namespace ESRI.NetCore.Interfaces.Tests
             var attendu = 5;
 
             // Actuel.
-            var actuel = client.Obtenir<DistrictT, DistrictU>(URLBASE);
+            var actuel = client.Obtenir<DistrictEsri>(URLBASE);
 
             // Assert.
             Assert.AreEqual(attendu, actuel.Count());
+        }
+
+        /// <summary>
+        /// Test primaire de construction.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"Client")]
+        public void ObtenirUnSeulDistrictSansConversion()
+        {
+            // Variables de travail.
+            var client = _serviceCollection.GetService<IClient>();
+            var parametres = _serviceCollection.GetService<IParametresRequete>();
+            parametres.Where = @"LECODEXVILLID = 25";
+            parametres.AfficherTousLesChamps = true;
+
+            // Attendu.
+            var noSecteurAttendu = 25;
+            var nomSecteurAttendu = "Aylmer";
+            var abbreviationAttendu = "A";
+
+            // Actuel.
+            var actuel = client.Obtenir<DistrictEsri>(URLBASE, parametres).FirstOrDefault();
+
+            // Assert.
+            Assert.IsNotNull(actuel);
+            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
         }
 
         /// <summary>
@@ -78,13 +92,13 @@ namespace ESRI.NetCore.Interfaces.Tests
             var abbreviationAttendu = "A";
 
             // Actuel.
-            var actuel = client.Obtenir<DistrictT, DistrictU>(URLBASE, parametres).FirstOrDefault();
+            var actuel = client.Obtenir<DistrictEsri>(URLBASE, parametres).FirstOrDefault();
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.Id);
-            Assert.AreEqual(nomSecteurAttendu, actuel.Nom);
-            Assert.AreEqual(abbreviationAttendu, actuel.Abbreviation);
+            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
         }
 
         /// <summary>
@@ -110,13 +124,13 @@ namespace ESRI.NetCore.Interfaces.Tests
             var abbreviationAttendu = "A";
 
             // Actuel.
-            var actuel = client.Obtenir<DistrictT, DistrictU>(URLBASE, parametres).FirstOrDefault();
+            var actuel = client.Obtenir<DistrictEsri>(URLBASE, parametres).FirstOrDefault();
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.Id);
-            Assert.AreEqual(nomSecteurAttendu, actuel.Nom);
-            Assert.AreEqual(abbreviationAttendu, actuel.Abbreviation);
+            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
         }
 
         /// <summary>
@@ -142,34 +156,23 @@ namespace ESRI.NetCore.Interfaces.Tests
             var abbreviationAttendu = "A";
 
             // Actuel.
-            var actuel = client.Obtenir<DistrictT, DistrictU>(URLBASE, parametres).FirstOrDefault();
+            var actuel = client.Obtenir<DistrictEsri>(URLBASE, parametres).FirstOrDefault();
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.Id);
-            Assert.AreEqual(nomSecteurAttendu, actuel.Nom);
-            Assert.AreEqual(abbreviationAttendu, actuel.Abbreviation);
+            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
         }
 
         /// <summary>
         /// Classe pour le district (retour d'ESRI).
         /// </summary>
-        public class DistrictT
+        public class DistrictEsri
         {
             public byte LECODEXVILLID { get; set; }
             public string LENOM { get; set; }
             public string LEABREV { get; set; }
         }
-
-        /// <summary>
-        /// Classe pour le district (retour).
-        /// </summary>
-        public class DistrictU
-        {
-            public byte Id { get; set; }
-            public string Nom { get; set; }
-            public string Abbreviation { get; set; }
-        }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ESRI.NetCore.Interfaces;
+﻿using ESRI.NetCore.Interfaces;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -13,14 +12,13 @@ namespace ESRI.NetCore
         /// </summary>
         private HttpClient _clientHttp;
         private IConstructeurUrl _constructeurUrl;
-        private IMapper _mapper;
 
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
         /// <param name="mapper">Mappeur de données.</param>
-        public Client(IMapper mapper)
-            : this(mapper, new ConstructeurUrl(), new HttpClient())
+        public Client()
+            : this(new ConstructeurUrl(), new HttpClient())
         {
         }
 
@@ -30,11 +28,10 @@ namespace ESRI.NetCore
         /// <param name="mapper">Mappeur de données.</param>
         /// <param name="constructeurUrl">Constructeur d'url.</param>
         /// <param name="clientHttp">Client HTTP.</param>
-        public Client(IMapper mapper, IConstructeurUrl constructeurUrl, HttpClient clientHttp)
+        public Client(IConstructeurUrl constructeurUrl, HttpClient clientHttp)
         {
             _clientHttp = clientHttp;
             _constructeurUrl = constructeurUrl;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -44,7 +41,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres.</param>
         /// <returns>Liste d'éléments convertis.</returns>
-        public IEnumerable<U> Obtenir<T, U>(string urlBase, IParametresRequete parametres) => _Obtenir<T, U>(urlBase, parametres);
+        public IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres) => _Obtenir<T>(urlBase, parametres);
 
         /// <summary>
         /// Obtenir les valeurs des couches ESRI en la convertissant avec le type T.
@@ -52,7 +49,7 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type de retour.</typeparam>
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <returns>Liste d'éléments convertis.</returns>
-        public IEnumerable<U> Obtenir<T, U>(string urlBase) => _Obtenir<T, U>(urlBase, ParametresRequete.Defaut);
+        public IEnumerable<T> Obtenir<T>(string urlBase) => _Obtenir<T>(urlBase, ParametresRequete.Defaut);
 
         /// <summary>
         /// Obtenir toutes les instances de la requête.
@@ -61,14 +58,12 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres pour la recherche.</param>
         /// <returns>Résultat.</returns>
-        private IEnumerable<U> _Obtenir<T, U>(string urlBase, IParametresRequete parametres)
+        private IEnumerable<T> _Obtenir<T>(string urlBase, IParametresRequete parametres)
         {
             // Construction de l'url.
-            _constructeurUrl.Debuter(urlBase);
-            _constructeurUrl.AjouterParametres(parametres);
-            var url = _constructeurUrl.Finaliser();
+            var url = ObtenirUri(urlBase, parametres);
 
-            var listeU = new List<U>();
+            var listeU = new List<T>();
             var reponse = _clientHttp.GetStringAsync(url).Result;
 
             dynamic json = JsonConvert.DeserializeObject(reponse);
@@ -78,11 +73,26 @@ namespace ESRI.NetCore
                 // Itérer dans les réponses.
                 foreach (dynamic attributs in json.features)
                 {
-                    listeU.Add(_mapper.Map<T, U>(JsonConvert.DeserializeObject<T>(attributs.attributes.ToString())));
+                    listeU.Add(JsonConvert.DeserializeObject<T>(attributs.attributes.ToString()));
                 }
             }
 
             return listeU;
         }
+
+        /// <summary>
+        /// Obtenir l'uri de la requête.
+        /// </summary>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="parametres">Paramètres pour la recherche.</param>
+        /// <returns>Url complète.</returns>
+        private System.Uri ObtenirUri(string urlBase, IParametresRequete parametres)
+        {
+            // Construction de l'url.
+            _constructeurUrl.Debuter(urlBase);
+            _constructeurUrl.AjouterParametres(parametres);
+            return _constructeurUrl.Finaliser();
+        }
+
     }
 }

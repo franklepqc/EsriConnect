@@ -20,8 +20,7 @@ Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes de
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
 
   <ItemGroup>
