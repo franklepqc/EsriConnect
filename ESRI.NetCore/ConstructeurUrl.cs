@@ -20,6 +20,9 @@ namespace ESRI.NetCore
         /// <param name="parametres">Paramètres.</param>
         public void AjouterParametres(IParametresRequete parametres)
         {
+            // On s'assure que la liste de paramètres est vide.
+            _parametres.Clear();
+
             var siVide = new Func<object, bool>((item) => item == null);
 
             if (!siVide(parametres.Where))
