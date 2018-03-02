@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ESRI.NetCore.Interfaces.Tests
@@ -106,6 +107,30 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// </summary>
         [TestMethod]
         [TestCategory(@"Client")]
+        public void ObtenirUnSeulDistrictAvecId()
+        {
+            // Variables de travail.
+            var client = _serviceCollection.GetService<IClient>();
+            var parametres = _serviceCollection.GetService<IParametresRequete>();
+            parametres.Where = @"LECODEXVILLID = 25";
+            parametres.ChampsSorties = new List<string>() { "LECODEXVILLID" };
+
+            // Attendu.
+            var noSecteurAttendu = 25;
+
+            // Actuel.
+            var actuel = client.Obtenir<DistrictEsriId>(URLBASE, parametres).FirstOrDefault();
+
+            // Assert.
+            Assert.IsNotNull(actuel);
+            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+        }
+
+        /// <summary>
+        /// Test primaire de construction.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"Client")]
         public void ObtenirUnSeulDistrictViaLongLat()
         {
             // Variables de travail.
@@ -166,11 +191,18 @@ namespace ESRI.NetCore.Interfaces.Tests
         }
 
         /// <summary>
-        /// Classe pour le district (retour d'ESRI).
+        /// Classe pour le district (retour d'ESRI - id seul).
         /// </summary>
-        public class DistrictEsri
+        public class DistrictEsriId
         {
             public byte LECODEXVILLID { get; set; }
+        }
+
+        /// <summary>
+        /// Classe pour le district (retour d'ESRI).
+        /// </summary>
+        public class DistrictEsri : DistrictEsriId
+        {
             public string LENOM { get; set; }
             public string LEABREV { get; set; }
         }
