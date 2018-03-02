@@ -43,6 +43,10 @@ namespace ESRI.NetCore
             {
                 _parametres.Add(@"outFields", @"*");
             }
+            else if (0 < parametres.ChampsSorties?.Count())
+            {
+                _parametres.Add(@"outFields", string.Join(",", parametres.ChampsSorties));
+            }
 
             // À la toute fin, on s'assure que c'est en json!
             _parametres.Add(@"f", "json");

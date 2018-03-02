@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ESRI.NetCore.Interfaces
 {
     /// <summary>
@@ -24,5 +26,10 @@ namespace ESRI.NetCore.Interfaces
         /// Indicateur à savoir si on veut avoir tous les champs en sortie.
         /// </summary>
         bool AfficherTousLesChamps { get; set; }
+
+        /// <summary>
+        /// Champs à afficher en sortie.
+        /// </summary>
+        IEnumerable<string> ChampsSorties { get; set; }
     }
 }
