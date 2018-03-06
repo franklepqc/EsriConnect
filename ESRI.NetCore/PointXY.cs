@@ -5,6 +5,25 @@ namespace ESRI.NetCore
     public class PointXY : IPointXY
     {
         /// <summary>
+        /// Constructeur par défaut.
+        /// </summary>
+        public PointXY()
+        {
+
+        }
+
+        /// <summary>
+        /// Constructeur avec points en entrée.
+        /// </summary>
+        /// <param name="x">Coordonnée X.</param>
+        /// <param name="y">Coordonnée Y.</param>
+        public PointXY(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        /// <summary>
         /// Coordonnée X.
         /// </summary>
         public double X { get; set; }

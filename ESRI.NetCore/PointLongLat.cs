@@ -5,6 +5,25 @@ namespace ESRI.NetCore
     public class PointLongLat : IPointLongLat
     {
         /// <summary>
+        /// Constructeur par défaut.
+        /// </summary>
+        public PointLongLat()
+        {
+
+        }
+
+        /// <summary>
+        /// Constructeur avec longitude et latitude.
+        /// </summary>
+        /// <param name="longitude">Longitude.</param>
+        /// <param name="latitude">Latitude.</param>
+        public PointLongLat(double longitude, double latitude)
+        {
+            Longitude = longitude;
+            Latitude = latitude;
+        }
+
+        /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
         public int WKID => 4326;
