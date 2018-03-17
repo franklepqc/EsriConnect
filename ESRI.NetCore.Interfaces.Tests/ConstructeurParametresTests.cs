@@ -15,6 +15,61 @@ namespace ESRI.NetCore.Interfaces.Tests
             .BuildServiceProvider();
 
         /// <summary>
+        /// Ajout d'un point.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"ConstructeurParametres")]
+        public void ConstruireAvecUnPoint_Succes()
+        {
+            // Variables de travail.
+            var constructeur = _serviceCollection.GetService<IConstructeurParametres>();
+
+            // Attendu.
+            var x = 860;
+            var y = 640;
+            var pointXY = new PointXY(x, y);
+            var attendu = pointXY.ToString();
+
+            // Actuel.
+            var actuel = constructeur
+                .AjouterPoint(x, y, pointXY.WKID)
+                .ConstruireParametresRequete()
+                .Point
+                .ToString();
+
+            // Assert.
+            Assert.AreEqual(attendu, actuel);
+        }
+
+        /// <summary>
+        /// Ajout d'un point perso.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"ConstructeurParametres")]
+        public void ConstruireAvecUnPointPerso_Succes()
+        {
+            // Variables de travail.
+            var constructeur = _serviceCollection.GetService<IConstructeurParametres>();
+
+            // Attendu.
+            var x = 224;
+            var y = -123;
+            var projection = 12345;
+            var point = new Point(x, y, projection);
+            var attendu = point.ToString();
+
+            // Actuel.
+            var actuel = constructeur
+                .AjouterPoint(x, y, point.WKID)
+                .ConstruireParametresRequete()
+                .Point
+                .ToString();
+
+            // Assert.
+            Assert.AreEqual(attendu, actuel);
+        }
+
+        /// <summary>
         /// Ajout d'une condition where.
         /// </summary>
         [TestMethod]
