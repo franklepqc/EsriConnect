@@ -2,18 +2,14 @@
 
 namespace ESRI.NetCore
 {
-    public class PointXY : Point, IPointXY
+    public class Point : IPoint
     {
-        /// <summary>
-        /// Well-known ID pour la projection.
-        /// </summary>
-        private const int _WKID = 32189;
-
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
-        public PointXY()
+        public Point()
         {
+
         }
 
         /// <summary>
@@ -21,19 +17,28 @@ namespace ESRI.NetCore
         /// </summary>
         /// <param name="x">Coordonnée X.</param>
         /// <param name="y">Coordonnée Y.</param>
-        public PointXY(double x, double y)
-            : base(x, y, _WKID)
+        /// <param name="projection">Projection.</param>
+        public Point(double x, double y, int projection)
         {
+            X = x;
+            Y = y;
+            WKID = projection;
         }
 
         /// <summary>
-        /// Well-known ID. Projection.
+        /// Coordonnée X.
         /// </summary>
-        public int WKID
-        {
-            get => _WKID;
-            set { }
-        }
+        public double X { get; set; }
+
+        /// <summary>
+        /// Coordonnée Y.
+        /// </summary>
+        public double Y { get; set; }
+
+        /// <summary>
+        /// Projection.
+        /// </summary>
+        public int WKID { get; set; }
 
         /// <summary>
         /// Écriture du point en sortie.

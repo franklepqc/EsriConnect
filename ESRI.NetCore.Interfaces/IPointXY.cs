@@ -6,13 +6,8 @@ namespace ESRI.NetCore.Interfaces
     public interface IPointXY : IPoint
     {
         /// <summary>
-        /// Coordonnée X.
+        /// Well-known ID. Projection.
         /// </summary>
-        double X { get; }
-
-        /// <summary>
-        /// Coordonnée Y.
-        /// </summary>
-        double Y { get; }
+        new int WKID { get; }
     }
 }

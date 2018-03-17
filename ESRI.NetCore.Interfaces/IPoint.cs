@@ -6,8 +6,18 @@ namespace ESRI.NetCore.Interfaces
     public interface IPoint
     {
         /// <summary>
+        /// Coordonnée X / Latitude.
+        /// </summary>
+        double X { get; set; }
+        
+        /// <summary>
+        /// Coordonnée Y / Longitude.
+        /// </summary>
+        double Y { get; set; }
+
+        /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
-        int WKID { get; }
+        int WKID { get; set; }
     }
 }

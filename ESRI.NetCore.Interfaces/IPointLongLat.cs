@@ -6,13 +6,8 @@ namespace ESRI.NetCore.Interfaces
     public interface IPointLongLat : IPoint
     {
         /// <summary>
-        /// Longitude.
+        /// Well-known ID. Projection.
         /// </summary>
-        double Longitude { get; }
-
-        /// <summary>
-        /// Latitude.
-        /// </summary>
-        double Latitude { get; }
+        new int WKID { get; }
     }
 }

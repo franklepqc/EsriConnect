@@ -2,8 +2,13 @@
 
 namespace ESRI.NetCore
 {
-    public class PointLongLat : IPointLongLat
+    public class PointLongLat : Point, IPointLongLat
     {
+        /// <summary>
+        /// Well-known ID pour la projection.
+        /// </summary>
+        private const int _WKID = 4326;
+
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
@@ -18,25 +23,20 @@ namespace ESRI.NetCore
         /// <param name="longitude">Longitude.</param>
         /// <param name="latitude">Latitude.</param>
         public PointLongLat(double longitude, double latitude)
+            : base(latitude, longitude, _WKID)
         {
-            Longitude = longitude;
-            Latitude = latitude;
+            X = longitude;
+            Y = latitude;
         }
 
         /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
-        public int WKID => 4326;
-
-        /// <summary>
-        /// Longitude.
-        /// </summary>
-        public double Longitude { get; set; }
-
-        /// <summary>
-        /// Latitude.
-        /// </summary>
-        public double Latitude { get; set; }
+        public int WKID 
+        {
+            get => _WKID;
+            set { }
+        }
 
         /// <summary>
         /// Écriture du point en sortie.
@@ -44,7 +44,7 @@ namespace ESRI.NetCore
         /// <returns>Point prêt à être utilisé.</returns>
         public override string ToString()
         {
-            return $"{ Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
+            return $"{ X.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
         }
     }
 }

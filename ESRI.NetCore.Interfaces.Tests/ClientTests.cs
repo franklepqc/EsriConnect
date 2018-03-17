@@ -18,7 +18,7 @@ namespace ESRI.NetCore.Interfaces.Tests
         private readonly string URLBASE = @"https://sdgis.ville.gatineau.qc.ca/agsweb/rest/services/General/DistrictCanu/MapServer/2";
 
         /// <summary>
-        /// Injection de dépendances.
+        /// Injection de dï¿½pendances.
         /// </summary>
         private IServiceProvider _serviceCollection = new ServiceCollection()
             .AddTransient<IConstructeurUrl, ConstructeurUrl>()
@@ -138,8 +138,8 @@ namespace ESRI.NetCore.Interfaces.Tests
             var parametres = _serviceCollection.GetService<IParametresRequete>();
             parametres.Point = new PointLongLat
             {
-                Longitude = -75.84492306335648d,
-                Latitude = 45.39518215539051d
+                X = -75.84492306335648d,
+                Y = 45.39518215539051d
             };
             parametres.AfficherTousLesChamps = true;
 
