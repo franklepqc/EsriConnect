@@ -29,19 +29,10 @@ namespace ESRI.NetCore
         /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
-        public int WKID
+        new public int WKID
         {
             get => _WKID;
             set { }
-        }
-
-        /// <summary>
-        /// Écriture du point en sortie.
-        /// </summary>
-        /// <returns>Point prêt à être utilisé.</returns>
-        public override string ToString()
-        {
-            return $"{ X.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
         }
     }
 }

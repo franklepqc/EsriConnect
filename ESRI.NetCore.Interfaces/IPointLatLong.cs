@@ -3,7 +3,7 @@ namespace ESRI.NetCore.Interfaces
     /// <summary>
     /// Point de la carte.
     /// </summary>
-    public interface IPointLongLat : IPoint
+    public interface IPointLatLong : IPoint
     {
         /// <summary>
         /// Well-known ID. Projection.

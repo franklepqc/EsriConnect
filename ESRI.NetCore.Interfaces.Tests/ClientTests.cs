@@ -131,16 +131,12 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// </summary>
         [TestMethod]
         [TestCategory(@"Client")]
-        public void ObtenirUnSeulDistrictViaLongLat()
+        public void ObtenirUnSeulDistrictViaLatLong()
         {
             // Variables de travail.
             var client = _serviceCollection.GetService<IClient>();
             var parametres = _serviceCollection.GetService<IParametresRequete>();
-            parametres.Point = new PointLongLat
-            {
-                X = -75.84492306335648d,
-                Y = 45.39518215539051d
-            };
+            parametres.Point = new PointLatLong(45.39518215539051d, -75.84492306335648d);
             parametres.AfficherTousLesChamps = true;
 
             // Attendu.

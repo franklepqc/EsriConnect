@@ -46,7 +46,7 @@ namespace ESRI.NetCore
         /// <returns>Point prêt à être utilisé.</returns>
         public override string ToString()
         {
-            return $"{ X.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
+            return $"{X.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ESRI.NetCore
 {
-    public class PointLongLat : Point, IPointLongLat
+    public class PointLatLong : Point, IPointLatLong
     {
         /// <summary>
         /// Well-known ID pour la projection.
@@ -12,7 +12,7 @@ namespace ESRI.NetCore
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
-        public PointLongLat()
+        public PointLatLong()
         {
 
         }
@@ -20,19 +20,17 @@ namespace ESRI.NetCore
         /// <summary>
         /// Constructeur avec longitude et latitude.
         /// </summary>
-        /// <param name="longitude">Longitude.</param>
         /// <param name="latitude">Latitude.</param>
-        public PointLongLat(double longitude, double latitude)
+        /// <param name="longitude">Longitude.</param>
+        public PointLatLong(double latitude, double longitude)
             : base(latitude, longitude, _WKID)
         {
-            X = longitude;
-            Y = latitude;
         }
 
         /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
-        public int WKID 
+        new public int WKID 
         {
             get => _WKID;
             set { }
@@ -44,7 +42,7 @@ namespace ESRI.NetCore
         /// <returns>Point prêt à être utilisé.</returns>
         public override string ToString()
         {
-            return $"{ X.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
+            return $"{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)},{X.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
         }
     }
 }

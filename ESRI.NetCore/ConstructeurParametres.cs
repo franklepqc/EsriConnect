@@ -30,6 +30,18 @@ namespace ESRI.NetCore
             return this;
         }
 
+        public IConstructeurParametres AjouterPointLatLong(double latitude, double longitude)
+        {
+            _parametres.Point = new PointLatLong(latitude, longitude);
+            return this;
+        }
+
+        public IConstructeurParametres AjouterPointXY(double x, double y)
+        {
+            _parametres.Point = new PointXY(x, y);
+            return this;
+        }
+
         public IParametresRequete ConstruireParametresRequete()
         {
             return _parametres;
