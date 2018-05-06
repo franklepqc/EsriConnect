@@ -62,7 +62,7 @@ namespace ESRI.NetCore
         {
             var contenu = JsonConvert.SerializeObject(features);
 
-            return _clientHttp.PostAsync(urlBase, new StringContent(contenu)).IsCompletedSuccessfully;
+            return _clientHttp.PostAsync(urlBase, new StringContent(contenu)).Result.IsSuccessStatusCode;
         }
 
         /// <summary>
