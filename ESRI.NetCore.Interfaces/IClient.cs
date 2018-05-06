@@ -23,5 +23,14 @@ namespace ESRI.NetCore.Interfaces
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres de la requête.</param>
         IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres);
+
+        /// <summary>
+        /// Envoie des features (POST).
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <typeparam name="T">Type des objets retournés par la requête.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="features">Features à enregistrer.</param>
+        bool EnregistrerFeatures<T>(string urlBase, T features);
     }
 }

@@ -52,6 +52,20 @@ namespace ESRI.NetCore
         public IEnumerable<T> Obtenir<T>(string urlBase) => _Obtenir<T>(urlBase, ParametresRequete.Defaut);
 
         /// <summary>
+        /// Envoie des features (POST).
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <typeparam name="T">Type des objets retournés par la requête.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="features">Features à enregistrer.</param>
+        public bool EnregistrerFeatures<T>(string urlBase, T features)
+        {
+            var contenu = JsonConvert.SerializeObject(features);
+
+            return _clientHttp.PostAsync(urlBase, new StringContent(contenu)).IsCompletedSuccessfully;
+        }
+
+        /// <summary>
         /// Obtenir toutes les instances de la requête.
         /// </summary>
         /// <typeparam name="T">Type de retour de la requête via le service web.</typeparam>
@@ -93,6 +107,5 @@ namespace ESRI.NetCore
             _constructeurUrl.AjouterParametres(parametres);
             return _constructeurUrl.Finaliser();
         }
-
     }
 }
