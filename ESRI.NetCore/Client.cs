@@ -60,9 +60,12 @@ namespace ESRI.NetCore
         /// <param name="features">Features à enregistrer.</param>
         public bool EnregistrerFeatures<T>(string urlBase, T features)
         {
-            var contenu = JsonConvert.SerializeObject(features);
+            var contenu = new Dictionary<string, string>();
 
-            return _clientHttp.PostAsync(urlBase, new StringContent(contenu)).Result.IsSuccessStatusCode;
+            contenu.Add("f", "json");
+            contenu.Add("features", JsonConvert.SerializeObject(features));
+
+            return _clientHttp.PostAsync(urlBase, new FormUrlEncodedContent(contenu)).Result.IsSuccessStatusCode;
         }
 
         /// <summary>
