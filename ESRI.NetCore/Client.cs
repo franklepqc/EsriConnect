@@ -1,37 +1,31 @@
 ﻿using ESRI.NetCore.Interfaces;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
 
 namespace ESRI.NetCore
 {
     public class Client : IClient
     {
         /// <summary>
-        /// Conteneurs.
+        /// Repository pour récupérer et enregistrer les données.
         /// </summary>
-        private HttpClient _clientHttp;
-        private IConstructeurUrl _constructeurUrl;
+        private IRepoFeatureClass _repoFeatureClass;
 
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
-        /// <param name="mapper">Mappeur de données.</param>
         public Client()
-            : this(new ConstructeurUrl(), new HttpClient())
+            : this(new RepoFeatureClass(new ConstructeurUrl()))
         {
         }
 
         /// <summary>
         /// Constructeur par injection.
         /// </summary>
-        /// <param name="mapper">Mappeur de données.</param>
-        /// <param name="constructeurUrl">Constructeur d'url.</param>
-        /// <param name="clientHttp">Client HTTP.</param>
-        public Client(IConstructeurUrl constructeurUrl, HttpClient clientHttp)
+        /// <param name="repoFeatureClass">Repository du feature class.</param>
+        public Client(IRepoFeatureClass repoFeatureClass)
         {
-            _clientHttp = clientHttp;
-            _constructeurUrl = constructeurUrl;
+            _repoFeatureClass = repoFeatureClass;
         }
 
         /// <summary>
@@ -58,15 +52,36 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type des objets retournés par la requête.</typeparam>
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="features">Features à enregistrer.</param>
-        public bool EnregistrerFeatures<T>(string urlBase, T features)
+        /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
+        public bool EnregistrerFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
         {
-            var contenu = new Dictionary<string, string>();
+            // Variables de travail.
+            var nombreElements = features.Count();
 
-            contenu.Add("f", "json");
-            contenu.Add("features", JsonConvert.SerializeObject(features));
+            if (nombreElements > nombreElementsParPage)
+            {
+                for (int numeroPage = 0; (numeroPage * nombreElementsParPage) < nombreElements; numeroPage++)
+                {
+                    _Envoyer(urlBase, features.Skip(numeroPage * nombreElementsParPage).Take(nombreElementsParPage));
+                }
+            }
+            else
+            {
+                _Envoyer(urlBase, features);
+            }
 
-            return _clientHttp.PostAsync(urlBase, new FormUrlEncodedContent(contenu)).Result.IsSuccessStatusCode;
+            return true;
         }
+
+        /// <summary>
+        /// Envoyer les éléments dans l'énumeration au feature.
+        /// </summary>
+        /// <typeparam name="T">Type d'éléments.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="parametres">Paramètres de l'envoie.</param>
+        /// <param name="elements">Éléments.</param>
+        private void _Envoyer<T>(string urlBase, IEnumerable<T> elements) => 
+            _repoFeatureClass.Enregistrer(urlBase, elements);
 
         /// <summary>
         /// Obtenir toutes les instances de la requête.
@@ -76,39 +91,6 @@ namespace ESRI.NetCore
         /// <param name="parametres">Paramètres pour la recherche.</param>
         /// <returns>Résultat.</returns>
         private IEnumerable<T> _Obtenir<T>(string urlBase, IParametresRequete parametres)
-        {
-            // Construction de l'url.
-            var url = ObtenirUri(urlBase, parametres);
-
-            var listeU = new List<T>();
-            var reponse = _clientHttp.GetStringAsync(url).Result;
-
-            dynamic json = JsonConvert.DeserializeObject(reponse);
-
-            if (null != json)
-            {
-                // Itérer dans les réponses.
-                foreach (dynamic attributs in json.features)
-                {
-                    listeU.Add(JsonConvert.DeserializeObject<T>(attributs.attributes.ToString()));
-                }
-            }
-
-            return listeU;
-        }
-
-        /// <summary>
-        /// Obtenir l'uri de la requête.
-        /// </summary>
-        /// <param name="urlBase">Url d'appel de base.</param>
-        /// <param name="parametres">Paramètres pour la recherche.</param>
-        /// <returns>Url complète.</returns>
-        private System.Uri ObtenirUri(string urlBase, IParametresRequete parametres)
-        {
-            // Construction de l'url.
-            _constructeurUrl.Debuter(urlBase);
-            _constructeurUrl.AjouterParametres(parametres);
-            return _constructeurUrl.Finaliser();
-        }
+            => _repoFeatureClass.Obtenir<T>(urlBase, parametres);
     }
 }

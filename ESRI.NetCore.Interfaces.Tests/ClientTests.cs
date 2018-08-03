@@ -23,6 +23,7 @@ namespace ESRI.NetCore.Interfaces.Tests
         private IServiceProvider _serviceCollection = new ServiceCollection()
             .AddTransient<IConstructeurUrl, ConstructeurUrl>()
             .AddTransient<IParametresRequete, ParametresRequete>()
+            .AddScoped<IRepoFeatureClass, RepoFeatureClass>()
             .AddScoped<IClient, Client>()
             .BuildServiceProvider();
 

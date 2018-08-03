@@ -31,6 +31,7 @@ namespace ESRI.NetCore.Interfaces
         /// <typeparam name="T">Type des objets retournés par la requête.</typeparam>
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="features">Features à enregistrer.</param>
-        bool EnregistrerFeatures<T>(string urlBase, T features);
+        /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
+        bool EnregistrerFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100);
     }
 }
