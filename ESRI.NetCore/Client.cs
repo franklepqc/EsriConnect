@@ -56,19 +56,23 @@ namespace ESRI.NetCore
         public bool EnregistrerFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
         {
             // Variables de travail.
-            var nombreElements = features.Count();
-
-            if (nombreElements > nombreElementsParPage)
+            try
             {
-                for (int numeroPage = 0; (numeroPage * nombreElementsParPage) < nombreElements; numeroPage++)
+                var nombreElements = features.Count();
+
+                if (nombreElements > nombreElementsParPage)
                 {
-                    _Envoyer(urlBase, features.Skip(numeroPage * nombreElementsParPage).Take(nombreElementsParPage));
+                    for (int numeroPage = 0; (numeroPage * nombreElementsParPage) < nombreElements; numeroPage++)
+                    {
+                        _Envoyer(urlBase, features.Skip(numeroPage * nombreElementsParPage).Take(nombreElementsParPage));
+                    }
+                }
+                else
+                {
+                    _Envoyer(urlBase, features);
                 }
             }
-            else
-            {
-                _Envoyer(urlBase, features);
-            }
+            catch { return false; }
 
             return true;
         }
