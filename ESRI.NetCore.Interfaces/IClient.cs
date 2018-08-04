@@ -33,5 +33,12 @@ namespace ESRI.NetCore.Interfaces
         /// <param name="features">Features à enregistrer.</param>
         /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
         bool EnregistrerFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100);
+        
+        /// <summary>
+        /// Vider le feature class.
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        bool Vider(string urlBase);
     }
 }

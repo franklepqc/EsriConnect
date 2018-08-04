@@ -8,6 +8,8 @@ namespace ESRI.NetCore
 {
     public class RepoFeatureClass : Interfaces.IRepoFeatureClass
     {
+        #region Fields
+
         /// <summary>
         /// Conteneur de requête.
         /// </summary>
@@ -18,6 +20,10 @@ namespace ESRI.NetCore
         /// </summary>
         private IConstructeurUrl _constructeurUrl;
 
+        #endregion Fields
+
+        #region Constructors
+
         /// <summary>
         /// Constructeur par injection.
         /// </summary>
@@ -26,6 +32,10 @@ namespace ESRI.NetCore
         {
             _constructeurUrl = constructeurUrl;
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         /// <summary>
         /// Enregistrer les types T vers le Feature Class.
@@ -79,6 +89,43 @@ namespace ESRI.NetCore
         }
 
         /// <summary>
+        /// Vider le feature class.
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <param name="urlBase">Url de base.</param>
+        public bool Vider(string urlBase)
+        {
+            try
+            {
+                var resultat = _clientHttp.GetAsync(urlBase + @"/query?where=1+%3D+1&returnGeometry=false&returnIdsOnly=true&f=pjson").Result;
+
+                var dictionaireParametres = new Dictionary<string, string>();
+
+                dynamic objectJson = JsonConvert.DeserializeObject(resultat.Content.ReadAsStringAsync().Result);
+
+                var liste = string.Join(",", JsonConvert.DeserializeObject<List<int>>(JsonConvert.SerializeObject(objectJson.objectIds)));
+
+                dictionaireParametres.Add("objectIds", liste);
+
+                _clientHttp.PostAsync(urlBase + $@"/deleteFeatures", new FormUrlEncodedContent(dictionaireParametres)).Wait();
+
+                return true;
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Obtenir l'uri de la requête.
+        /// </summary>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="parametres">Paramètres pour la recherche.</param>
+        /// <returns>Url complète.</returns>
+        private Uri ConstruireUriEnregistrer(string urlBase) =>
+            new Uri(System.IO.Path.Combine(urlBase + @"/addFeatures"));
+
+        /// <summary>
         /// Obtenir l'uri de la requête.
         /// </summary>
         /// <param name="urlBase">Url d'appel de base.</param>
@@ -92,13 +139,6 @@ namespace ESRI.NetCore
             return _constructeurUrl.Finaliser();
         }
 
-        /// <summary>
-        /// Obtenir l'uri de la requête.
-        /// </summary>
-        /// <param name="urlBase">Url d'appel de base.</param>
-        /// <param name="parametres">Paramètres pour la recherche.</param>
-        /// <returns>Url complète.</returns>
-        private Uri ConstruireUriEnregistrer(string urlBase) =>
-            new Uri(System.IO.Path.Combine(urlBase + @"/addFeatures"));
+        #endregion Methods
     }
 }

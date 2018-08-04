@@ -6,10 +6,16 @@ namespace ESRI.NetCore
 {
     public class Client : IClient
     {
+        #region Fields
+
         /// <summary>
         /// Repository pour récupérer et enregistrer les données.
         /// </summary>
         private IRepoFeatureClass _repoFeatureClass;
+
+        #endregion Fields
+
+        #region Constructors
 
         /// <summary>
         /// Constructeur par défaut.
@@ -28,22 +34,9 @@ namespace ESRI.NetCore
             _repoFeatureClass = repoFeatureClass;
         }
 
-        /// <summary>
-        /// Obtenir les valeurs des couches ESRI en la convertissant avec le type T.
-        /// </summary>
-        /// <typeparam name="T">Type de retour.</typeparam>
-        /// <param name="urlBase">Url d'appel de base.</param>
-        /// <param name="parametres">Paramètres.</param>
-        /// <returns>Liste d'éléments convertis.</returns>
-        public IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres) => _Obtenir<T>(urlBase, parametres);
+        #endregion Constructors
 
-        /// <summary>
-        /// Obtenir les valeurs des couches ESRI en la convertissant avec le type T.
-        /// </summary>
-        /// <typeparam name="T">Type de retour.</typeparam>
-        /// <param name="urlBase">Url d'appel de base.</param>
-        /// <returns>Liste d'éléments convertis.</returns>
-        public IEnumerable<T> Obtenir<T>(string urlBase) => _Obtenir<T>(urlBase, ParametresRequete.Defaut);
+        #region Methods
 
         /// <summary>
         /// Envoie des features (POST).
@@ -78,13 +71,37 @@ namespace ESRI.NetCore
         }
 
         /// <summary>
+        /// Obtenir les valeurs des couches ESRI en la convertissant avec le type T.
+        /// </summary>
+        /// <typeparam name="T">Type de retour.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="parametres">Paramètres.</param>
+        /// <returns>Liste d'éléments convertis.</returns>
+        public IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres) => _Obtenir<T>(urlBase, parametres);
+
+        /// <summary>
+        /// Obtenir les valeurs des couches ESRI en la convertissant avec le type T.
+        /// </summary>
+        /// <typeparam name="T">Type de retour.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <returns>Liste d'éléments convertis.</returns>
+        public IEnumerable<T> Obtenir<T>(string urlBase) => _Obtenir<T>(urlBase, ParametresRequete.Defaut);
+
+        /// <summary>
+        /// Vider le feature class.
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        public bool Vider(string urlBase) => _repoFeatureClass.Vider(urlBase);
+
+        /// <summary>
         /// Envoyer les éléments dans l'énumeration au feature.
         /// </summary>
         /// <typeparam name="T">Type d'éléments.</typeparam>
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres de l'envoie.</param>
         /// <param name="elements">Éléments.</param>
-        private void _Envoyer<T>(string urlBase, IEnumerable<T> elements) => 
+        private void _Envoyer<T>(string urlBase, IEnumerable<T> elements) =>
             _repoFeatureClass.Enregistrer(urlBase, elements);
 
         /// <summary>
@@ -96,5 +113,7 @@ namespace ESRI.NetCore
         /// <returns>Résultat.</returns>
         private IEnumerable<T> _Obtenir<T>(string urlBase, IParametresRequete parametres)
             => _repoFeatureClass.Obtenir<T>(urlBase, parametres);
+
+        #endregion Methods
     }
 }
