@@ -97,17 +97,11 @@ namespace ESRI.NetCore
         {
             try
             {
-                var resultat = _clientHttp.GetAsync(urlBase + @"/query?where=1+%3D+1&returnGeometry=false&returnIdsOnly=true&f=pjson").Result;
-
                 var dictionaireParametres = new Dictionary<string, string>();
 
-                dynamic objectJson = JsonConvert.DeserializeObject(resultat.Content.ReadAsStringAsync().Result);
+                dictionaireParametres.Add(@"where", @"OBJECTID > -1");
 
-                var liste = string.Join(",", JsonConvert.DeserializeObject<List<int>>(JsonConvert.SerializeObject(objectJson.objectIds)));
-
-                dictionaireParametres.Add("objectIds", liste);
-
-                _clientHttp.PostAsync(urlBase + $@"/deleteFeatures", new FormUrlEncodedContent(dictionaireParametres)).Wait();
+                _clientHttp.PostAsync(urlBase + @"/deleteFeatures", new FormUrlEncodedContent(dictionaireParametres)).Wait();
 
                 return true;
             }
