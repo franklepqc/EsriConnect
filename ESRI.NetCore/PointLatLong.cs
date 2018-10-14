@@ -23,7 +23,7 @@ namespace ESRI.NetCore
         /// <param name="latitude">Latitude.</param>
         /// <param name="longitude">Longitude.</param>
         public PointLatLong(double latitude, double longitude)
-            : base(latitude, longitude, _WKID)
+            : base(longitude, latitude, _WKID)
         {
         }
 
@@ -42,7 +42,7 @@ namespace ESRI.NetCore
         /// <returns>Point prêt à être utilisé.</returns>
         public override string ToString()
         {
-            return $"{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)},{X.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
+            return $"{X.ToString(System.Globalization.CultureInfo.InvariantCulture)},{Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
         }
     }
 }

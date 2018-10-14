@@ -18,20 +18,12 @@ namespace ESRI.NetCore
         #region Constructors
 
         /// <summary>
-        /// Constructeur par défaut.
-        /// </summary>
-        public Client()
-            : this(new RepoFeatureClass(new ConstructeurUrl()))
-        {
-        }
-
-        /// <summary>
         /// Constructeur par injection.
         /// </summary>
         /// <param name="repoFeatureClass">Repository du feature class.</param>
-        public Client(IRepoFeatureClass repoFeatureClass)
+        public Client(IRepoFeatureClass repoFeatureClass = null)
         {
-            _repoFeatureClass = repoFeatureClass;
+            _repoFeatureClass = (repoFeatureClass ?? new RepoFeatureClass(new ConstructeurUrl()));
         }
 
         #endregion Constructors
