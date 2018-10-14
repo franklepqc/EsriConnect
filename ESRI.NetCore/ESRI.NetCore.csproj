@@ -12,6 +12,7 @@ Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes de
     <Copyright>François Lépine</Copyright>
     <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <AssemblyVersion>1.0.12.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
