@@ -165,10 +165,11 @@ namespace ESRI.NetCore.Interfaces.Tests
             // Variables de travail.
             var client = _serviceCollection.GetService<IClient>();
             var parametres = _serviceCollection.GetService<IParametresRequete>();
-            parametres.Point = new PointXY
+            parametres.Point = new Point
             {
                 X = 356089.315529d,
-                Y = 5028569.06737d
+                Y = 5028569.06737d,
+                SRID = 32189
             };
             parametres.AfficherTousLesChamps = true;
 

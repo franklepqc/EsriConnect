@@ -27,12 +27,12 @@ namespace ESRI.NetCore.Interfaces.Tests
             // Attendu.
             var x = 860;
             var y = 640;
-            var pointXY = new PointXY(x, y);
+            var pointXY = new Point(x, y, 32189);
             var attendu = pointXY.ToString();
 
             // Actuel.
             var actuel = constructeur
-                .AjouterPoint(x, y, pointXY.WKID)
+                .AjouterPoint(x, y, pointXY.SRID)
                 .ConstruireParametresRequete()
                 .Point
                 .ToString();
@@ -60,7 +60,7 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Actuel.
             var actuel = constructeur
-                .AjouterPoint(x, y, point.WKID)
+                .AjouterPoint(x, y, point.SRID)
                 .ConstruireParametresRequete()
                 .Point
                 .ToString();

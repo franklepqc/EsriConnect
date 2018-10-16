@@ -8,6 +8,6 @@ namespace ESRI.NetCore.Interfaces
         /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
-        new int WKID { get; }
+        new int SRID { get; }
     }
 }

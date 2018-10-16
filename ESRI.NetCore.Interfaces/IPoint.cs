@@ -16,8 +16,8 @@ namespace ESRI.NetCore.Interfaces
         double Y { get; set; }
 
         /// <summary>
-        /// Well-known ID. Projection.
+        /// Identifiant de la référence spatiale.
         /// </summary>
-        int WKID { get; set; }
+        int SRID { get; set; }
     }
 }

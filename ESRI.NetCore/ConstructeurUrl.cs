@@ -34,7 +34,7 @@ namespace ESRI.NetCore
             {
                 _parametres.Add(@"geometry", WebUtility.UrlEncode(parametres.Point.ToString()));
                 _parametres.Add(@"geometryType", "esriGeometryPoint");      // Point.
-                _parametres.Add(@"inSR", WebUtility.UrlEncode(parametres.Point.WKID.ToString()));
+                _parametres.Add(@"inSR", WebUtility.UrlEncode(parametres.Point.SRID.ToString()));
             }
 
             _parametres.Add(@"returnGeometry", parametres.RetournerGeometrie.ToString().ToLower());

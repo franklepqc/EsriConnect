@@ -30,7 +30,7 @@ namespace ESRI.NetCore
         /// <summary>
         /// Well-known ID. Projection.
         /// </summary>
-        new public int WKID 
+        new public int SRID 
         {
             get => _WKID;
             set { }

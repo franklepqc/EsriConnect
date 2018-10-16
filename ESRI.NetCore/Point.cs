@@ -17,12 +17,12 @@ namespace ESRI.NetCore
         /// </summary>
         /// <param name="x">Coordonnée X.</param>
         /// <param name="y">Coordonnée Y.</param>
-        /// <param name="projection">Projection.</param>
-        public Point(double x, double y, int projection)
+        /// <param name="srid">Identifiant de la référence spatiale.</param>
+        public Point(double x, double y, int srid)
         {
             X = x;
             Y = y;
-            WKID = projection;
+            SRID = srid;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ESRI.NetCore
         /// <summary>
         /// Projection.
         /// </summary>
-        public int WKID { get; set; }
+        public int SRID { get; set; }
 
         /// <summary>
         /// Écriture du point en sortie.

@@ -100,10 +100,11 @@ namespace ESRI.NetCore.Interfaces.Tests
             // Variables de travail.
             var constructeur = _serviceCollection.GetService<IConstructeurUrl>();
             var urlBase = @"https://sdgis.ville.gatineau.qc.ca/agsweb/rest/services/General/DistrictCanu/MapServer/2";
-            var point = new PointXY
+            var point = new Point
             {
                 X = 42187d,
-                Y = 55748d
+                Y = 55748d,
+                SRID = 32189
             };
             var clauseWhere = @"1 = 1";
             var parametres = new Mock<IParametresRequete>();
@@ -134,10 +135,11 @@ namespace ESRI.NetCore.Interfaces.Tests
             // Variables de travail.
             var constructeur = _serviceCollection.GetService<IConstructeurUrl>();
             var urlBase = @"https://sdgis.ville.gatineau.qc.ca/agsweb/rest/services/General/DistrictCanu/MapServer/2";
-            var point = new PointXY
+            var point = new Point
             {
                 X = 42187.123123d,
-                Y = 55748.456456d
+                Y = 55748.456456d,
+                SRID = 32189
             };
             var clauseWhere = @"1 = 1";
             var parametres = new Mock<IParametresRequete>();
@@ -169,10 +171,11 @@ namespace ESRI.NetCore.Interfaces.Tests
             var constructeur = _serviceCollection.GetService<IConstructeurUrl>();
             var urlBase = @"https://sdgis.ville.gatineau.qc.ca/agsweb/rest/services/General/DistrictCanu/MapServer/2";
             var whereClause = @"1 = 1";
-            var point = new PointXY
+            var point = new Point
             {
                 X = 42187d,
-                Y = 55748d
+                Y = 55748d,
+                SRID = 32189
             };
             var parametres = new Mock<IParametresRequete>();
 
