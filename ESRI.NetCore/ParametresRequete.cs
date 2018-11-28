@@ -36,6 +36,6 @@ namespace ESRI.NetCore
         /// <summary>
         /// Champs à afficher en sortie.
         /// </summary>
-        public IEnumerable<string> ChampsSorties { get; set; }
+        public IEnumerable<string> ChampsSorties { get; set; } = new List<string>();
     }
 }

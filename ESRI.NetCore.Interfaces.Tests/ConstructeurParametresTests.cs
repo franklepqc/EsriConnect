@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -138,6 +139,51 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.AreEqual(attendu, actuel);
+        }
+        
+        /// <summary>
+        /// Ajout de deux champs pour la sortie, séparément.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"ConstructeurParametres")]
+        public void ConstruireAvecDeuxChampsSortieSeparement_Succes()
+        {
+            // Variables de travail.
+            var constructeur = _serviceCollection.GetService<IConstructeurParametres>();
+
+            // Attendu.
+            var attendu = 2;
+
+            // Actuel.
+            var actuel = constructeur
+                .AjouterChampsSortie("Toto1")
+                .AjouterChampsSortie("Toto2")
+                .ConstruireParametresRequete();
+
+            // Assert.
+            Assert.AreEqual(attendu, actuel.ChampsSorties.Count());
+        }
+
+        /// <summary>
+        /// Ajout de deux champs pour la sortie, ensemble.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"ConstructeurParametres")]
+        public void ConstruireAvecDeuxChampsSortieEnsemble_Succes()
+        {
+            // Variables de travail.
+            var constructeur = _serviceCollection.GetService<IConstructeurParametres>();
+
+            // Attendu.
+            var attendu = 2;
+
+            // Actuel.
+            var actuel = constructeur
+                .AjouterChampsSortie("Toto1", "Toto2")
+                .ConstruireParametresRequete();
+
+            // Assert.
+            Assert.AreEqual(attendu, actuel.ChampsSorties.Count());
         }
     }
 }

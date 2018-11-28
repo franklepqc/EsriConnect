@@ -1,4 +1,5 @@
 using ESRI.NetCore.Interfaces;
+using System.Linq;
 
 namespace ESRI.NetCore
 {
@@ -14,7 +15,7 @@ namespace ESRI.NetCore
 
         public IConstructeurParametres AjouterChampsSortie(params string[] champs)
         {
-            _parametres.ChampsSorties = champs;
+            _parametres.ChampsSorties = Enumerable.Empty<string>().Concat(_parametres.ChampsSorties).Concat(champs);
             return this;
         }
 

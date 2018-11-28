@@ -15,7 +15,7 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// <summary>
         /// Url de base pour l'interrogation.
         /// </summary>
-        private readonly string URLBASE = @"https://sdgis.ville.gatineau.qc.ca/agsweb/rest/services/General/DistrictCanu/MapServer/2";
+        private readonly string URLBASE = @"https://sdgis.ville.gatineau.qc.ca/agsweb/rest/services/General/DistrictCanu/MapServer/3";
 
         /// <summary>
         /// Injection de d�pendances.
@@ -177,6 +177,40 @@ namespace ESRI.NetCore.Interfaces.Tests
             var noSecteurAttendu = 25;
             var nomSecteurAttendu = "Aylmer";
             var abbreviationAttendu = "A";
+
+            // Actuel.
+            var actuel = client.Obtenir<DistrictEsri>(URLBASE, parametres).FirstOrDefault();
+
+            // Assert.
+            Assert.IsNotNull(actuel);
+            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
+        }
+
+        /// <summary>
+        /// Test primaire de construction.
+        /// </summary>
+        [TestMethod]
+        [TestCategory(@"Client")]
+        public void ObtenirUnSeulDistrictViaXYEtDeuxChamps()
+        {
+            // Variables de travail.
+            var client = _serviceCollection.GetService<IClient>();
+            var parametres = _serviceCollection.GetService<IParametresRequete>();
+            parametres.Point = new Point
+            {
+                X = 356089.315529d,
+                Y = 5028569.06737d,
+                SRID = 32189
+            };
+            parametres.AfficherTousLesChamps = false;
+            parametres.ChampsSorties = new[] { nameof(DistrictEsri.LECODEXVILLID), nameof(DistrictEsri.LENOM) };
+
+            // Attendu.
+            var noSecteurAttendu = 25;
+            var nomSecteurAttendu = "Aylmer";
+            var abbreviationAttendu = null as string;
 
             // Actuel.
             var actuel = client.Obtenir<DistrictEsri>(URLBASE, parametres).FirstOrDefault();
