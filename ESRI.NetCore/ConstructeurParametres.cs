@@ -37,9 +37,6 @@ namespace ESRI.NetCore
             return this;
         }
 
-        public IConstructeurParametres AjouterPointXY(double x, double y) =>
-            AjouterPoint(x, y, 32189);
-
         public IParametresRequete ConstruireParametresRequete()
         {
             return _parametres;
