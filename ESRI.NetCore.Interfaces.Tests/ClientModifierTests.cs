@@ -1,22 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace ESRI.NetCore.Interfaces.Tests
 {
     [TestClass]
-    public class ClientEnregistrerTests
+    public class ClientModifierTests
     {
         /// <summary>
         /// Test primaire de construction.
         /// </summary>
         [TestMethod]
-        [TestCategory(@"Client - Features")]
-        public void EnregistrerFeatures1Seul()
+        [TestCategory(@"Client - Modifier features")]
+        public void ModifierFeatures1Seul()
         {
             // Variables de travail.
             var urlBase = @"http://localhost";
@@ -24,7 +22,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var nombreEnregistrements = 0;
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Enregistrer(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
+            mockRepo.Setup(k => k.MettreAJour(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
                 .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
@@ -43,7 +41,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var attendu = true;
 
             // Actuel.
-            var actuel = client.EnregistrerFeatures(urlBase, new List<ObjetFeature>() { new ObjetFeature() });
+            var actuel = client.ModifierFeatures(urlBase, new List<ObjetFeature>() { new ObjetFeature() });
 
             // Assert.
             Assert.AreEqual(attendu, actuel);
@@ -54,8 +52,8 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// Test primaire de construction.
         /// </summary>
         [TestMethod]
-        [TestCategory(@"Client - Features")]
-        public void EnregistrerFeatures117()
+        [TestCategory(@"Client - Modifier features")]
+        public void ModifierFeatures117()
         {
             // Variables de travail.
             var urlBase = @"http://localhost";
@@ -64,7 +62,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var listeElements = new List<ObjetFeature>();
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Enregistrer(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
+            mockRepo.Setup(k => k.MettreAJour(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
                 .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
@@ -88,7 +86,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var attendu = true;
 
             // Actuel.
-            var actuel = client.EnregistrerFeatures(urlBase, listeElements);
+            var actuel = client.ModifierFeatures(urlBase, listeElements);
 
             // Assert.
             Assert.AreEqual(attendu, actuel);
@@ -99,8 +97,8 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// Test primaire de construction.
         /// </summary>
         [TestMethod]
-        [TestCategory(@"Client - Features")]
-        public void EnregistrerFeatures50()
+        [TestCategory(@"Client - Modifier features")]
+        public void ModifierFeatures50()
         {
             // Variables de travail.
             var urlBase = @"http://localhost";
@@ -109,7 +107,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var listeElements = new List<ObjetFeature>();
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Enregistrer(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
+            mockRepo.Setup(k => k.MettreAJour(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
                 .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
@@ -133,7 +131,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var attendu = true;
 
             // Actuel.
-            var actuel = client.EnregistrerFeatures(urlBase, listeElements);
+            var actuel = client.ModifierFeatures(urlBase, listeElements);
 
             // Assert.
             Assert.AreEqual(attendu, actuel);
@@ -144,8 +142,8 @@ namespace ESRI.NetCore.Interfaces.Tests
         /// Test primaire de construction.
         /// </summary>
         [TestMethod]
-        [TestCategory(@"Client - Features")]
-        public void EnregistrerFeatures100()
+        [TestCategory(@"Client - Modifier features")]
+        public void ModifierFeatures100()
         {
             // Variables de travail.
             var urlBase = @"http://localhost";
@@ -154,7 +152,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var listeElements = new List<ObjetFeature>();
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Enregistrer(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
+            mockRepo.Setup(k => k.MettreAJour(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
                 .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
@@ -178,7 +176,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var attendu = true;
 
             // Actuel.
-            var actuel = client.EnregistrerFeatures(urlBase, listeElements);
+            var actuel = client.ModifierFeatures(urlBase, listeElements);
 
             // Assert.
             Assert.AreEqual(attendu, actuel);

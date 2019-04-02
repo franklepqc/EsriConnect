@@ -7,7 +7,9 @@ namespace ESRI.NetCore.Interfaces
     {
         IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres);
 
-        void Enregistrer<T>(string urlBase, IEnumerable<T> elements);
+        void Ajouter<T>(string urlBase, IEnumerable<T> elements);
+
+        void MettreAJour<T>(string urlBase, IEnumerable<T> elements);
 
         bool Vider(string urlBase);
     }

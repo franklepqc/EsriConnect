@@ -38,7 +38,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="features">Features à enregistrer.</param>
         /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
-        public bool EnregistrerFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
+        public bool AjouterFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
         {
             // Variables de travail.
             try
@@ -49,12 +49,44 @@ namespace ESRI.NetCore
                 {
                     for (int numeroPage = 0; (numeroPage * nombreElementsParPage) < nombreElements; numeroPage++)
                     {
-                        _Envoyer(urlBase, features.Skip(numeroPage * nombreElementsParPage).Take(nombreElementsParPage));
+                        _Ajouter(urlBase, features.Skip(numeroPage * nombreElementsParPage).Take(nombreElementsParPage));
                     }
                 }
                 else
                 {
-                    _Envoyer(urlBase, features);
+                    _Ajouter(urlBase, features);
+                }
+            }
+            catch { return false; }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Envoie des features (POST).
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <typeparam name="T">Type des objets retournés par la requête.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="features">Features à enregistrer.</param>
+        /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
+        public bool ModifierFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
+        {
+            // Variables de travail.
+            try
+            {
+                var nombreElements = features.Count();
+
+                if (nombreElements > nombreElementsParPage)
+                {
+                    for (int numeroPage = 0; (numeroPage * nombreElementsParPage) < nombreElements; numeroPage++)
+                    {
+                        _MettreAJour(urlBase, features.Skip(numeroPage * nombreElementsParPage).Take(nombreElementsParPage));
+                    }
+                }
+                else
+                {
+                    _MettreAJour(urlBase, features);
                 }
             }
             catch { return false; }
@@ -93,8 +125,17 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres de l'envoie.</param>
         /// <param name="elements">Éléments.</param>
-        private void _Envoyer<T>(string urlBase, IEnumerable<T> elements) =>
-            _repoFeatureClass.Enregistrer(urlBase, elements);
+        private void _Ajouter<T>(string urlBase, IEnumerable<T> elements) =>
+            _repoFeatureClass.Ajouter(urlBase, elements);
+
+        /// <summary>
+        /// Envoyer les éléments dans l'énumeration au feature.
+        /// </summary>
+        /// <typeparam name="T">Type d'éléments.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="elements">Éléments.</param>
+        private void _MettreAJour<T>(string urlBase, IEnumerable<T> elements) =>
+            _repoFeatureClass.MettreAJour(urlBase, elements);
 
         /// <summary>
         /// Obtenir toutes les instances de la requête.
@@ -105,6 +146,35 @@ namespace ESRI.NetCore
         /// <returns>Résultat.</returns>
         private IEnumerable<T> _Obtenir<T>(string urlBase, IParametresRequete parametres)
             => _repoFeatureClass.Obtenir<T>(urlBase, parametres);
+
+        /// <summary>
+        /// Copier les éléments d'une couche à l'autre.
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <param name="urlBaseSource">Url de la source.</param>
+        /// <param name="urlBaseDestination">Url de destination.</param>
+        /// <param name="where">Filtre des éléments.</param>
+        public bool Copier<T>(string urlBaseSource, string urlBaseDestination, string where)
+        {
+            try
+            {
+                // Récupérer les éléments.
+                var enregistrementsACopier = Obtenir<T>(urlBaseSource, new ParametresRequete
+                {
+                    Where = where,
+                    AfficherTousLesChamps = true,
+                    RetournerGeometrie = false
+                });
+
+                // Effectuer la copie.
+                ModifierFeatures(urlBaseDestination, enregistrementsACopier);
+
+                return true;
+            }
+            catch { }
+
+            return false;
+        }
 
         #endregion Methods
     }

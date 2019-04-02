@@ -32,13 +32,32 @@ namespace ESRI.NetCore.Interfaces
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="features">Features à enregistrer.</param>
         /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
-        bool EnregistrerFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100);
-        
+        bool AjouterFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100);
+
+        /// <summary>
+        /// Modifie des features (POST).
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <typeparam name="T">Type des objets retournés par la requête.</typeparam>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="features">Features à enregistrer.</param>
+        /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
+        bool ModifierFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100);
+
         /// <summary>
         /// Vider le feature class.
         /// </summary>
         /// <returns>Vrai si le tout est ok.</returns>
         /// <param name="urlBase">Url d'appel de base.</param>
         bool Vider(string urlBase);
+
+        /// <summary>
+        /// Copier les éléments d'une couche à l'autre.
+        /// </summary>
+        /// <returns>Vrai si le tout est ok.</returns>
+        /// <param name="urlBaseSource">Url de la source.</param>
+        /// <param name="urlBaseDestination">Url de destination.</param>
+        /// <param name="where">Filtre des éléments.</param>
+        bool Copier<T>(string urlBaseSource, string urlBaseDestination, string where);
     }
 }

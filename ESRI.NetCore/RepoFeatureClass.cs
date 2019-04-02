@@ -6,7 +6,7 @@ using System.Net.Http;
 
 namespace ESRI.NetCore
 {
-    public class RepoFeatureClass : Interfaces.IRepoFeatureClass
+    public class RepoFeatureClass : IRepoFeatureClass
     {
         #region Fields
 
@@ -43,7 +43,7 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type à enregistrer.</typeparam>
         /// <param name="urlBase">Url de base.</param>
         /// <param name="elements">Éléments de sauvegarde.</param>
-        public void Enregistrer<T>(string urlBase, IEnumerable<T> elements)
+        public void Ajouter<T>(string urlBase, IEnumerable<T> elements)
         {
             // Variables de travail.
             var parametres = new Dictionary<string, string>();
@@ -53,7 +53,26 @@ namespace ESRI.NetCore
             parametres.Add("features", JsonConvert.SerializeObject(elements));
 
             // Envoie.
-            _clientHttp.PostAsync(ConstruireUriEnregistrer(urlBase), new FormUrlEncodedContent(parametres)).Wait();
+            _clientHttp.PostAsync(ConstruireUriAjouter(urlBase), new FormUrlEncodedContent(parametres)).Wait();
+        }
+
+        /// <summary>
+        /// Mettre à jour les enregistrements.
+        /// </summary>
+        /// <typeparam name="T">Type de base.</typeparam>
+        /// <param name="urlBase">Url d'enregistrement.</param>
+        /// <param name="elements">Éléments.</param>
+        public void MettreAJour<T>(string urlBase, IEnumerable<T> elements)
+        {
+            // Variables de travail.
+            var parametres = new Dictionary<string, string>();
+
+            // Paramètres / éléments à envoyer.
+            parametres.Add("f", "json");
+            parametres.Add("features", JsonConvert.SerializeObject(elements));
+
+            // Envoie.
+            _clientHttp.PostAsync(ConstruireUriMettreAJour(urlBase), new FormUrlEncodedContent(parametres)).Wait();
         }
 
         /// <summary>
@@ -116,8 +135,17 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres pour la recherche.</param>
         /// <returns>Url complète.</returns>
-        private Uri ConstruireUriEnregistrer(string urlBase) =>
+        private Uri ConstruireUriAjouter(string urlBase) =>
             new Uri(System.IO.Path.Combine(urlBase + @"/addFeatures"));
+
+        /// <summary>
+        /// Obtenir l'uri de la requête.
+        /// </summary>
+        /// <param name="urlBase">Url d'appel de base.</param>
+        /// <param name="parametres">Paramètres pour la recherche.</param>
+        /// <returns>Url complète.</returns>
+        private Uri ConstruireUriMettreAJour(string urlBase) =>
+            new Uri(System.IO.Path.Combine(urlBase + @"/updateFeatures"));
 
         /// <summary>
         /// Obtenir l'uri de la requête.
