@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace ESRI.NetCore
@@ -50,7 +51,7 @@ namespace ESRI.NetCore
 
             // Paramètres / éléments à envoyer.
             parametres.Add("f", "json");
-            parametres.Add("features", JsonConvert.SerializeObject(elements));
+            parametres.Add("features", CreerFeatures(elements));
 
             // Envoie.
             _clientHttp.PostAsync(ConstruireUriAjouter(urlBase), new FormUrlEncodedContent(parametres)).Wait();
@@ -69,7 +70,7 @@ namespace ESRI.NetCore
 
             // Paramètres / éléments à envoyer.
             parametres.Add("f", "json");
-            parametres.Add("features", JsonConvert.SerializeObject(elements));
+            parametres.Add("features", CreerFeatures(elements));
 
             // Envoie.
             _clientHttp.PostAsync(ConstruireUriMettreAJour(urlBase), new FormUrlEncodedContent(parametres)).Wait();
@@ -146,6 +147,21 @@ namespace ESRI.NetCore
         /// <returns>Url complète.</returns>
         private Uri ConstruireUriMettreAJour(string urlBase) =>
             new Uri(System.IO.Path.Combine(urlBase + @"/updateFeatures"));
+
+        /// <summary>
+        /// Créer les éléments sous la rubrique "features".
+        /// </summary>
+        /// <typeparam name="T">Type d'éléments.</typeparam>
+        /// <param name="elements">Éléments à convertir.</param>
+        /// <returns>Objet sérialisé en Json.</returns>
+        private string CreerFeatures<T>(IEnumerable<T> elements) =>
+            JsonConvert.SerializeObject(
+                elements
+                .Select(element => new
+                {
+                    attributes = element
+                })
+                .ToList());
 
         /// <summary>
         /// Obtenir l'uri de la requête.
