@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <Version>1.0.13</Version>
+    <Version>1.0.14</Version>
     <PackageId>ESRIConnect.Interfaces</PackageId>
     <Authors>François Lépine</Authors>
     <Company></Company>
@@ -12,8 +12,8 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <AssemblyVersion>1.0.13.0</AssemblyVersion>
-    <FileVersion>1.0.12.0</FileVersion>
+    <AssemblyVersion>1.0.14.0</AssemblyVersion>
+    <FileVersion>1.0.14.0</FileVersion>
   </PropertyGroup>
 
 </Project>
