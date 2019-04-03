@@ -44,7 +44,7 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type à enregistrer.</typeparam>
         /// <param name="urlBase">Url de base.</param>
         /// <param name="elements">Éléments de sauvegarde.</param>
-        public void Ajouter<T>(string urlBase, IEnumerable<T> elements)
+        public void Ajouter<T>(string urlBase, IEnumerable<IFeatureSet<T>> elements)
         {
             // Variables de travail.
             var parametres = new Dictionary<string, string>();
@@ -63,7 +63,7 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type de base.</typeparam>
         /// <param name="urlBase">Url d'enregistrement.</param>
         /// <param name="elements">Éléments.</param>
-        public void MettreAJour<T>(string urlBase, IEnumerable<T> elements)
+        public void MettreAJour<T>(string urlBase, IEnumerable<IFeatureSet<T>> elements)
         {
             // Variables de travail.
             var parametres = new Dictionary<string, string>();
@@ -83,10 +83,10 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url de base.</param>
         /// <param name="parametres">Paramètres d'envoie.</param>
         /// <returns>Liste d'éléments.</returns>
-        public IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres)
+        public IEnumerable<IFeatureSet<T>> Obtenir<T>(string urlBase, IParametresRequete parametres)
         {
             // Variables de travail.
-            var listeU = new List<T>();
+            var listeU = new List<FeatureSet<T>>();
 
             try
             {
@@ -97,9 +97,17 @@ namespace ESRI.NetCore
                 if (null != json)
                 {
                     // Itérer dans les réponses.
-                    foreach (dynamic attributs in json.features)
+                    foreach (dynamic feature in json.features)
                     {
-                        listeU.Add(JsonConvert.DeserializeObject<T>(attributs.attributes.ToString()));
+                        var temp = new FeatureSet<T>();
+
+                        // Remplir la géométrie.
+                        if (parametres.RetournerGeometrie && null != feature.geometry)
+                            temp.geometry = JsonConvert.DeserializeObject<Point>(feature.geometry.ToString());
+
+                        temp.attributes = JsonConvert.DeserializeObject<T>(feature.attributes.ToString());
+
+                        listeU.Add(temp);
                     }
                 }
             }
@@ -154,14 +162,8 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type d'éléments.</typeparam>
         /// <param name="elements">Éléments à convertir.</param>
         /// <returns>Objet sérialisé en Json.</returns>
-        private string CreerFeatures<T>(IEnumerable<T> elements) =>
-            JsonConvert.SerializeObject(
-                elements
-                .Select(element => new
-                {
-                    attributes = element
-                })
-                .ToList());
+        private string CreerFeatures<T>(IEnumerable<IFeatureSet<T>> elements) =>
+            JsonConvert.SerializeObject(elements);
 
         /// <summary>
         /// Obtenir l'uri de la requête.

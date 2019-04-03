@@ -22,8 +22,8 @@ namespace ESRI.NetCore.Interfaces.Tests
             var nombreEnregistrements = 0;
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
-                .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
+            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<IFeatureSet<ObjetFeature>>>()))
+                .Callback<string, IEnumerable<IFeatureSet<ObjetFeature>>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
                 });
@@ -41,7 +41,7 @@ namespace ESRI.NetCore.Interfaces.Tests
             var attendu = true;
 
             // Actuel.
-            var actuel = client.AjouterFeatures(urlBase, new List<ObjetFeature>() { new ObjetFeature() });
+            var actuel = client.AjouterFeatures(urlBase, new List<FeatureSet<ObjetFeature>>() { new FeatureSet<ObjetFeature>() { attributes = new ObjetFeature() } });
 
             // Assert.
             Assert.AreEqual(attendu, actuel);
@@ -59,18 +59,18 @@ namespace ESRI.NetCore.Interfaces.Tests
             var urlBase = @"http://localhost";
             var mockRepo = new Mock<IRepoFeatureClass>();
             var nombreEnregistrements = 0;
-            var listeElements = new List<ObjetFeature>();
+            var listeElements = new List<FeatureSet<ObjetFeature>>();
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
-                .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
+            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<IFeatureSet<ObjetFeature>>>()))
+                .Callback<string, IEnumerable<IFeatureSet<ObjetFeature>>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
                 });
 
             for (int i = 0; i < 117; i++)
             {
-                listeElements.Add(new ObjetFeature());
+                listeElements.Add(new FeatureSet<ObjetFeature>() { attributes = new ObjetFeature() });
             }
 
             var provider = new ServiceCollection()
@@ -104,18 +104,18 @@ namespace ESRI.NetCore.Interfaces.Tests
             var urlBase = @"http://localhost";
             var mockRepo = new Mock<IRepoFeatureClass>();
             var nombreEnregistrements = 0;
-            var listeElements = new List<ObjetFeature>();
+            var listeElements = new List<FeatureSet<ObjetFeature>>();
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
-                .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
+            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<IFeatureSet<ObjetFeature>>>()))
+                .Callback<string, IEnumerable<IFeatureSet<ObjetFeature>>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
                 });
 
             for (int i = 0; i < 50; i++)
             {
-                listeElements.Add(new ObjetFeature());
+                listeElements.Add(new FeatureSet<ObjetFeature>() { attributes = new ObjetFeature() });
             }
 
             var provider = new ServiceCollection()
@@ -149,18 +149,18 @@ namespace ESRI.NetCore.Interfaces.Tests
             var urlBase = @"http://localhost";
             var mockRepo = new Mock<IRepoFeatureClass>();
             var nombreEnregistrements = 0;
-            var listeElements = new List<ObjetFeature>();
+            var listeElements = new List<FeatureSet<ObjetFeature>>();
 
             // Préparer l'enregistrement.
-            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<ObjetFeature>>()))
-                .Callback<string, IEnumerable<ObjetFeature>>((url, elements) =>
+            mockRepo.Setup(k => k.Ajouter(It.IsAny<string>(), It.IsAny<IEnumerable<IFeatureSet<ObjetFeature>>>()))
+                .Callback<string, IEnumerable<IFeatureSet<ObjetFeature>>>((url, elements) =>
                 {
                     nombreEnregistrements += elements.Count();
                 });
 
             for (int i = 0; i < 100; i++)
             {
-                listeElements.Add(new ObjetFeature());
+                listeElements.Add(new FeatureSet<ObjetFeature>() { attributes = new ObjetFeature() });
             }
 
             var provider = new ServiceCollection()

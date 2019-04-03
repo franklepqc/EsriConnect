@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <PackageId>ESRIConnect</PackageId>
-    <Version>1.0.14</Version>
+    <Version>1.0.15</Version>
     <Authors>François Lépine</Authors>
     <Company></Company>
     <Product>ESRIConnect</Product>
@@ -12,7 +12,7 @@ Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes de
     <Copyright>François Lépine</Copyright>
     <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <AssemblyVersion>1.0.14.0</AssemblyVersion>
+    <AssemblyVersion>1.0.15.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

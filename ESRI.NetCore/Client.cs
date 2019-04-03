@@ -38,7 +38,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="features">Features à enregistrer.</param>
         /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
-        public bool AjouterFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
+        public bool AjouterFeatures<T>(string urlBase, IEnumerable<IFeatureSet<T>> features, int nombreElementsParPage = 100)
         {
             // Variables de travail.
             try
@@ -70,7 +70,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="features">Features à enregistrer.</param>
         /// <param name="nombreElementsParPage">Nombre d'éléments à envoyer par page.</param>
-        public bool ModifierFeatures<T>(string urlBase, IEnumerable<T> features, int nombreElementsParPage = 100)
+        public bool ModifierFeatures<T>(string urlBase, IEnumerable<IFeatureSet<T>> features, int nombreElementsParPage = 100)
         {
             // Variables de travail.
             try
@@ -101,7 +101,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres.</param>
         /// <returns>Liste d'éléments convertis.</returns>
-        public IEnumerable<T> Obtenir<T>(string urlBase, IParametresRequete parametres) => _Obtenir<T>(urlBase, parametres);
+        public IEnumerable<IFeatureSet<T>> Obtenir<T>(string urlBase, IParametresRequete parametres) => _Obtenir<T>(urlBase, parametres);
 
         /// <summary>
         /// Obtenir les valeurs des couches ESRI en la convertissant avec le type T.
@@ -109,7 +109,7 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type de retour.</typeparam>
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <returns>Liste d'éléments convertis.</returns>
-        public IEnumerable<T> Obtenir<T>(string urlBase) => _Obtenir<T>(urlBase, ParametresRequete.Defaut);
+        public IEnumerable<IFeatureSet<T>> Obtenir<T>(string urlBase) => _Obtenir<T>(urlBase, ParametresRequete.Defaut);
 
         /// <summary>
         /// Vider le feature class.
@@ -125,7 +125,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres de l'envoie.</param>
         /// <param name="elements">Éléments.</param>
-        private void _Ajouter<T>(string urlBase, IEnumerable<T> elements) =>
+        private void _Ajouter<T>(string urlBase, IEnumerable<IFeatureSet<T>> elements) =>
             _repoFeatureClass.Ajouter(urlBase, elements);
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace ESRI.NetCore
         /// <typeparam name="T">Type d'éléments.</typeparam>
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="elements">Éléments.</param>
-        private void _MettreAJour<T>(string urlBase, IEnumerable<T> elements) =>
+        private void _MettreAJour<T>(string urlBase, IEnumerable<IFeatureSet<T>> elements) =>
             _repoFeatureClass.MettreAJour(urlBase, elements);
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace ESRI.NetCore
         /// <param name="urlBase">Url d'appel de base.</param>
         /// <param name="parametres">Paramètres pour la recherche.</param>
         /// <returns>Résultat.</returns>
-        private IEnumerable<T> _Obtenir<T>(string urlBase, IParametresRequete parametres)
+        private IEnumerable<IFeatureSet<T>> _Obtenir<T>(string urlBase, IParametresRequete parametres)
             => _repoFeatureClass.Obtenir<T>(urlBase, parametres);
 
         /// <summary>
@@ -163,11 +163,11 @@ namespace ESRI.NetCore
                 {
                     Where = where,
                     AfficherTousLesChamps = true,
-                    RetournerGeometrie = false
+                    RetournerGeometrie = true
                 });
 
                 // Effectuer la copie.
-                ModifierFeatures(urlBaseDestination, enregistrementsACopier);
+                AjouterFeatures(urlBaseDestination, enregistrementsACopier);
 
                 return true;
             }

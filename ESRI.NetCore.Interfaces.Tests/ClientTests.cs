@@ -70,9 +70,9 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
-            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
-            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
+            Assert.AreEqual(noSecteurAttendu, actuel.attributes.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.attributes.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.attributes.LEABREV);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
-            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
-            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
+            Assert.AreEqual(noSecteurAttendu, actuel.attributes.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.attributes.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.attributes.LEABREV);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
+            Assert.AreEqual(noSecteurAttendu, actuel.attributes.LECODEXVILLID);
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
-            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
-            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
+            Assert.AreEqual(noSecteurAttendu, actuel.attributes.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.attributes.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.attributes.LEABREV);
         }
 
         /// <summary>
@@ -183,9 +183,9 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
-            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
-            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
+            Assert.AreEqual(noSecteurAttendu, actuel.attributes.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.attributes.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.attributes.LEABREV);
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace ESRI.NetCore.Interfaces.Tests
 
             // Assert.
             Assert.IsNotNull(actuel);
-            Assert.AreEqual(noSecteurAttendu, actuel.LECODEXVILLID);
-            Assert.AreEqual(nomSecteurAttendu, actuel.LENOM);
-            Assert.AreEqual(abbreviationAttendu, actuel.LEABREV);
+            Assert.AreEqual(noSecteurAttendu, actuel.attributes.LECODEXVILLID);
+            Assert.AreEqual(nomSecteurAttendu, actuel.attributes.LENOM);
+            Assert.AreEqual(abbreviationAttendu, actuel.attributes.LEABREV);
         }
 
         /// <summary>
