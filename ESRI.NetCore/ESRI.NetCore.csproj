@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <PackageId>ESRIConnect</PackageId>
-    <Version>1.0.15</Version>
+    <Version>1.0.16</Version>
     <Authors>François Lépine</Authors>
     <Company></Company>
     <Product>ESRIConnect</Product>
@@ -12,11 +12,11 @@ Permet d'effectuer des appels aux services d'ESRI (en utilisant les requêtes de
     <Copyright>François Lépine</Copyright>
     <RepositoryUrl>https://github.com/franklepqc/EsriConnect</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <AssemblyVersion>1.0.15.0</AssemblyVersion>
+    <AssemblyVersion>1.0.16.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta1" />
   </ItemGroup>
 
   <ItemGroup>
